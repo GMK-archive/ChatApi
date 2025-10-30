@@ -19,7 +19,7 @@ namespace WebApplication9
                 await context.Response.WriteAsync("Unauthorised: missing header");
                 return;
             }
-            string token = authHeader.Substring("Bearer ".Length);
+            string token = authHeader.Substring("Bearer ".Length).Trim();
             if (token != "supertajnytoken")
             {
                 context.Response.StatusCode = StatusCodes.Status403Forbidden;
