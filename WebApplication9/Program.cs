@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Database>();
 
 var app = builder.Build();
+app.UseBearerMiddleware();
 
 //ChatHistory chatHistory = new ChatHistory();
 //chatHistory.AddMessage(new ChatMessage("User1", "Hello!"));
