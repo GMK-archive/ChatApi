@@ -21,6 +21,13 @@ app.MapGet("/login", async () =>
     return Results.Ok();
 });
 
+app.MapGet("/register", (Database db, User user) =>
+{
+    db.Users.Add(user);
+    db.SaveChanges();
+    return Results.Created($"{user.Id}", user);
+});
+
 app.MapGet("/chat", (Database db, string? timestamp) =>
 {
     ChatHistory chatHistory = new ChatHistory(db);
