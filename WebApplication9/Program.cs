@@ -15,6 +15,12 @@ app.UseBearerMiddleware();
 //timestamp jest w postaci stringa "2025-10-13T13:08:22.1712280+02:00"
 
 app.MapGet("/", () => "Hello World!");
+
+app.MapGet("/login", async () =>
+{
+    return Results.Ok();
+});
+
 app.MapGet("/chat", (Database db, string? timestamp) =>
 {
     ChatHistory chatHistory = new ChatHistory(db);

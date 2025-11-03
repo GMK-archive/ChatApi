@@ -5,6 +5,7 @@ namespace WebApplication9
     {
         public DbSet<ChatMessage> Messages { get; set; }
 
+        public DbSet<User> Users { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=chat.db");
@@ -15,6 +16,11 @@ namespace WebApplication9
             modelBuilder.Entity<ChatMessage>().HasKey(m => m.Timestamp);
             modelBuilder.Entity<ChatMessage>().Property(m => m.Autor).IsRequired();
             modelBuilder.Entity<ChatMessage>().Property(m => m.Content).IsRequired();
+
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<User>().HasKey(u => u.Id);
+            modelBuilder.Entity<User>().Property(u => u.Email).IsRequired();
+            modelBuilder.Entity<User>().Property(u => u.PasswordHash).IsRequired();
         }
     }
 }

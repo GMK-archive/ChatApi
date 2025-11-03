@@ -12,15 +12,20 @@ namespace WebApplication9
         }
         public async Task InvokeAsync(HttpContext context)
         {
+            if (context.Request.Path.Equals("/login"))
+            {
+                await _next(context);
+                return;
+            }
             string authHeader = context.Request.Headers["Authorization"].ToString();
-            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer"))
+            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
             {
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 await context.Response.WriteAsync("Unauthorised: missing header");
                 return;
             }
             string token = authHeader.Substring("Bearer ".Length).Trim();
-            if (token != "supertajnytoken")
+            if (token != "superTajnyToken")
             {
                 context.Response.StatusCode = StatusCodes.Status403Forbidden;
                 await context.Response.WriteAsync("Unauthorised: missing header");
