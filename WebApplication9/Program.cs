@@ -22,7 +22,7 @@ app.MapPost("/user/me", async (Database db, User user) =>
     return Results.Ok();
 });
 // rejestracja
-app.MapGet("/users", (Database db, User user) =>
+app.MapPost("/users", (Database db, User user) =>
 {
     db.Users.Add(user);
     db.SaveChanges();
@@ -38,7 +38,7 @@ app.MapGet("/chat/messages", (Database db, string minimalDate) =>
 });
 app.MapPost("/chat/messages", (Database db, ChatMessage message) =>
 {
-    if(message.Content == null || message.Content == string.Empty || message.Autor == null || message.Autor == string.Empty)
+    if (string.IsNullOrEmpty(message.Content) || string.IsNullOrEmpty(message.Autor))
     {
         return Results.BadRequest("Author or Content is empty. Author or Content fields are requied");
     }
