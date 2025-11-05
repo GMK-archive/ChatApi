@@ -12,7 +12,7 @@ namespace WebApplication9
         }
         public async Task InvokeAsync(HttpContext context)
         {
-            if (context.Request.Path.Equals("/login"))
+            if (context.Request.Path.Equals("/users") || context.Request.Path.Equals("/user/me"))
             {
                 await _next(context);
                 return;

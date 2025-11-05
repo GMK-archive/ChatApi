@@ -1,0 +1,43 @@
++ pobieranie wiadomoœci
++ dodawanie wiadomoœci
++ rejestracja
++ logowanie
+
+
+get / post    / chat
+
+api jak mamy po enpointach to tylko nazywamy metody a nie endpointy
+
+chat/ messages - nasz¹ kcjê opisujê zasób metody
+post/ chat/ messages oznacza ¿e postujemy i dodajemy do wiadomoœci
+
+Get/chat/messages/1 nie ma sensu bo pobieramy wszystkie wiadomoœci a nie jedn¹ konkretn¹
+
+Post/register ¿Ÿle zmodelowany poniewa¿ ju¿ jest w post
+
+Post/users je¿eli chcemy utworzyæ u¿ytkownika
+
+login: aaaa pasword: 1234
+
+Patch - atanie zasobu
+Put - zamiana ca³ego zasobu
+
+przy rejestracji my chcemy dodaæ dane do Post/Users/Me
+je¿eli chcemy wysyaæ haso i login to aby samo siê dokumentowao
+
+i tak wysyamy timestamp  1970 r
+
+trzeba ustawiæ lastTimestamp jako wymaganego elementu
+
+Get/chat/messages?upFrom=...
+
+cala œcie¿ka ma swe nazwy
+
+Get... - metoda - co chemy zrobiæ z zasobem
+.../chat/messages... - scie¿ka zasobu i dziaa tak samo jak w windows explorerze
+...?upFrom=... - parametry zapytania / parametr query - informuje czego szukamy i filtrujemy zasób
+
+Get/chat/messages?minDate=...
+Post/Chat/messages
+Post/Users
+Post/Users/Me 

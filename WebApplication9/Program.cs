@@ -16,28 +16,27 @@ app.UseBearerMiddleware();
 
 app.MapGet("/", () => "Hello World!");
 
-app.MapGet("/login", async () =>
+// logowanie
+app.MapPost("/user/me", async (Database db, User user) =>
 {
     return Results.Ok();
 });
-
-app.MapGet("/register", (Database db, User user) =>
+// rejestracja
+app.MapGet("/users", (Database db, User user) =>
 {
     db.Users.Add(user);
     db.SaveChanges();
     return Results.Created($"{user.Id}", user);
 });
-
-app.MapGet("/chat", (Database db, string? timestamp) =>
+// pobranie histori chatu
+app.MapGet("/chat/messages", (Database db, string minimalDate) =>
 {
     ChatHistory chatHistory = new ChatHistory(db);
-    if (timestamp == null)
-        return chatHistory.GetLast(10);
     DateTime parsedTimestamp = DateTime.Now;
-    DateTime.TryParse(timestamp, out parsedTimestamp);
+    DateTime.TryParse(minimalDate, out parsedTimestamp);
     return chatHistory.GetMessagesAfter(parsedTimestamp);
 });
-app.MapPost("/chat", (Database db, ChatMessage message) =>
+app.MapPost("/chat/messages", (Database db, ChatMessage message) =>
 {
     if(message.Content == null || message.Content == string.Empty || message.Autor == null || message.Autor == string.Empty)
     {
@@ -45,7 +44,7 @@ app.MapPost("/chat", (Database db, ChatMessage message) =>
     }
     ChatHistory chatHistory = new ChatHistory(db);
     chatHistory.AddMessage(message);
-    return Results.Created($"/chat/{message.Timestamp.Ticks}", message);
+    return Results.Created($"/chat/messages/{message.Timestamp.Ticks}", message);
 });
 
 app.Run();
