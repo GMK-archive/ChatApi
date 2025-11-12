@@ -17,9 +17,19 @@ app.UseBearerMiddleware();
 app.MapGet("/", () => "Hello World!");
 
 // logowanie
-app.MapPost("/user/me", async (Database db, User user) =>
+app.MapPost("/user/me", (Database db, User user) =>
 {
-    return Results.Ok();
+    if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.PasswordHash))
+    {
+        return Results.BadRequest("Error Account is not found");
+    }
+    var foundUser = db.Users.Where(u => u.Email == user.Email).Where(u => u.PasswordHash == user.PasswordHash).FirstOrDefault();
+    if (foundUser != null)
+    {
+        return Results.Ok(foundUser);
+    }
+
+    return Results.BadRequest("Error Account is not found");
 });
 // rejestracja
 app.MapPost("/users", (Database db, User user) =>

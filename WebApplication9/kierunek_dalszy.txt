@@ -8,7 +8,7 @@ get / post    / chat
 
 api jak mamy po enpointach to tylko nazywamy metody a nie endpointy
 
-chat/ messages - nasz¹ kcjê opisujê zasób metody
+chat/ messages - nasz¹ aplikcjê opisujê zasób metody 
 post/ chat/ messages oznacza ¿e postujemy i dodajemy do wiadomoœci
 
 Get/chat/messages/1 nie ma sensu bo pobieramy wszystkie wiadomoœci a nie jedn¹ konkretn¹
@@ -41,3 +41,13 @@ Get/chat/messages?minDate=...
 Post/Chat/messages
 Post/Users
 Post/Users/Me 
+
+komendy:
+
+http://localhost:5038/user/me
+
+{
+ "Id" : 1,
+ "Email" : "Test@email.com",
+ "PasswordHash" : "Test2WQ"
+}
