@@ -14,7 +14,7 @@ app.UseBearerMiddleware();
 //chatHistory.AddMessage(new ChatMessage("User2", "Deez Nuts"));
 //chatHistory.AddMessage(new ChatMessage("User3", "67"));
 //timestamp jest w postaci stringa "2025-10-13T13:08:22.1712280+02:00"
-
+Dictionary<string, User> UserTokens = new Dictionary<string, User>();
 app.MapGet("/", () => "Hello World!");
 
 // logowanie
@@ -35,7 +35,10 @@ app.MapPost("/user/me", (Database db, User user) =>
     {
         return Results.Unauthorized();
     }
-    string token = "superTajnyToken";
+    
+
+    string token = Guid.NewGuid().ToString();
+    UserTokens[token] = foundUser;
     return Results.Ok(token);
 });
 // rejestracja
