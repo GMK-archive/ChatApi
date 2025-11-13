@@ -1,3 +1,4 @@
+using Isopoh.Cryptography.Argon2;
 using System.Web;
 using WebApplication9;
 
@@ -23,13 +24,19 @@ app.MapPost("/user/me", (Database db, User user) =>
     {
         return Results.BadRequest("Error Account is not found");
     }
-    var foundUser = db.Users.Where(u => u.Email == user.Email).Where(u => u.PasswordHash == user.PasswordHash).FirstOrDefault();
-    if (foundUser != null)
+    var foundUser = db.Users.Where(u => u.Email == user.Email).FirstOrDefault();
+    if(foundUser == null)
     {
-        return Results.Ok(foundUser);
+        return Results.Unauthorized();
     }
+    bool paswordOk = Argon2.Verify(foundUser.PasswordHash, user.PasswordHash);
 
-    return Results.BadRequest("Error Account is not found");
+    if (!paswordOk)
+    {
+        return Results.Unauthorized();
+    }
+    string token = "superTajnyToken";
+    return Results.Ok(token);
 });
 // rejestracja
 app.MapPost("/users", (Database db, User user) =>

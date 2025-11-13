@@ -47,7 +47,6 @@ komendy:
 http://localhost:5038/user/me
 
 {
- "Id" : 1,
  "Email" : "Test@email.com",
- "PasswordHash" : "Test2WQ"
+ "PasswordHash" : "Haslo"
 }
