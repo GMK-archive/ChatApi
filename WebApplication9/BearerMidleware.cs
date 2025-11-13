@@ -25,12 +25,13 @@ namespace WebApplication9
                 return;
             }
             string token = authHeader.Substring("Bearer ".Length).Trim();
-            if (token != "superTajnyToken")
+            if (!Tokens.UserTokens.TryGetValue(token, out User user))
             {
                 context.Response.StatusCode = StatusCodes.Status403Forbidden;
                 await context.Response.WriteAsync("Unauthorised: missing header");
                 return;
             }
+            context.Items["User"] = user;
             await _next(context);
         }
     }
